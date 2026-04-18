@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { GettingStarted } from "@/components/dashboard/getting-started";
 
 export default async function DashboardHome() {
   const supabase = createClient();
@@ -83,22 +84,7 @@ export default async function DashboardHome() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Next steps</CardTitle>
-          <CardDescription>
-            Here&apos;s what to do to make this template your own.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ol className="list-inside list-decimal space-y-2 text-sm text-muted-foreground">
-            <li>Replace the marketing copy in <code>components/marketing/</code>.</li>
-            <li>Create your Stripe products and paste the price IDs in <code>.env.local</code>.</li>
-            <li>Add your own tables to <code>db/schema/</code> and run <code>npm run db:push</code>.</li>
-            <li>Build your first feature — ask your AI assistant to scaffold it for you.</li>
-          </ol>
-        </CardContent>
-      </Card>
+      <GettingStarted />
     </div>
   );
 }

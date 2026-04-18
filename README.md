@@ -15,7 +15,11 @@ the product.
 - **Auth pages**: sign in, sign up, forgot / reset password
 - **Dashboard**: sidebar, top bar with user menu, account + billing + settings pages
 - **Example feature**: a working Projects CRUD under `app/dashboard/projects/` that mirrors `prompts/project-setup/setup-tables.md` — study it, then delete it when you build your own
-- **Route protection** via middleware (`/dashboard`, `/account` are gated)
+- **Paid-feature gating**: `lib/auth/subscription.ts` + a worked example (Free plan capped at 3 projects, Pro unlimited) with an `UpgradeCard` upsell
+- **Route protection** via middleware (anything under `/dashboard` is gated)
+- **Dark mode** via `next-themes` — toggle in the header
+- **Polish**: branded 404 / error / loading screens, dynamic favicon + OG image, a dismissible "getting started" checklist on the dashboard, and a startup env-var check with friendly errors
+- **Legal placeholders**: `/privacy` and `/terms` pages ready to be replaced
 
 ## Quick start
 
@@ -44,12 +48,10 @@ You need:
 npm run db:push
 ```
 
-Then open the Supabase SQL editor and run:
-
-- `db/sql/handle_new_user.sql` — trigger that inserts a `profiles` row on signup.
-- `db/sql/projects_rls.sql` — Row Level Security for the example Projects
-  feature. Delete the `projects` table and this file if you remove the
-  example.
+Then open the Supabase SQL editor and run
+[`db/sql/setup.sql`](./db/sql/setup.sql) once. It installs the trigger that
+auto-creates a `profiles` row on signup plus Row Level Security on the
+example Projects table.
 
 ### 4. Run the dev server
 
@@ -120,11 +122,8 @@ See [`prompts/README.md`](./prompts/README.md) for the full index.
 
 ## Deploying
 
-Push this repo to GitHub and import it on [Vercel](https://vercel.com). Add
-the same env vars you have in `.env.local`, set
-`NEXT_PUBLIC_SITE_URL` to your deployed URL, and hook the Stripe webhook
-(<https://dashboard.stripe.com/webhooks>) to
-`https://your-site.com/api/stripe/webhook`.
+See [`DEPLOY.md`](./DEPLOY.md) for a step-by-step Vercel + Supabase + Stripe
+production checklist (with smoke tests and a "before you launch" list).
 
 ## Credits
 

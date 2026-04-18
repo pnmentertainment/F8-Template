@@ -42,3 +42,14 @@ so your assistant can rebuild or swap one out.
 - [`setup-auth.md`](./project-setup/setup-auth.md) — Supabase Auth (email/password + OAuth).
 - [`setup-payments.md`](./project-setup/setup-payments.md) — Stripe Checkout, Portal, webhook.
 - [`setup-tables.md`](./project-setup/setup-tables.md) — add a new DB table + queries + actions + RLS.
+
+### `features/`
+
+Short, task-shaped prompt templates to paste into Claude / Cursor when
+extending the template. Each one names the files to edit, the env vars
+involved, and the canonical example to mimic.
+
+- [`add-a-page.md`](./features/add-a-page.md) — add a new protected dashboard page.
+- [`add-a-table.md`](./features/add-a-table.md) — add a new database table.
+- [`add-an-oauth-provider.md`](./features/add-an-oauth-provider.md) — enable GitHub, Microsoft, etc. alongside Google.
+- [`add-a-gated-feature.md`](./features/add-a-gated-feature.md) — make a feature paid-only using the subscription helper.
