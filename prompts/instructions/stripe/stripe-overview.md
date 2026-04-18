@@ -83,22 +83,57 @@ and returns the URL. `app/dashboard/billing/manage-button.tsx` calls it.
 
 ## Access control for paid features
 
-Read the `subscriptions` row for the current user in the server component
-that needs gating:
+Use the helpers in **`lib/auth/subscription.ts`**. They're the one place
+every paid feature reads from, so changes (e.g. raising a Free limit) only
+touch one file.
 
 ```ts
-import { db } from "@/db";
-import { subscriptions } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import {
+  getPlanLimits,
+  getSubscription,
+  isPro,
+} from "@/lib/auth/subscription";
 
-const [sub] = await db
-  .select()
-  .from(subscriptions)
-  .where(eq(subscriptions.userId, user.id))
-  .limit(1);
+const sub = await getSubscription(user.id);
 
-const isPro = sub?.status === "active" || sub?.status === "trialing";
+if (isPro(sub)) {
+  // Pro feature
+}
+
+const { maxProjects } = getPlanLimits(sub); // null means unlimited
 ```
+
+### Two-layer gate: action + UI
+
+Always check **both** places, because one protects your data and the other
+protects the user experience:
+
+- **Server action / route handler** — the authoritative check. Return
+  `{ error }` if the user is over-limit. Without this, anyone who knows the
+  action name can call it directly.
+- **Page / UI** — render an `<UpgradeCard />` (from
+  `components/billing/upgrade-card.tsx`) instead of the form when the user
+  is at the limit. Keeps the surface honest.
+
+See `app/dashboard/projects/actions.ts` and
+`app/dashboard/projects/page.tsx` for the canonical pattern used in this
+template.
+
+### Adding a new gate
+
+1. Add a limit (or feature flag) to `PLAN_LIMITS` in
+   `lib/auth/subscription.ts`:
+
+    ```ts
+    export const PLAN_LIMITS = {
+      free: { maxProjects: 3, canExport: false },
+      pro: { maxProjects: null, canExport: true },
+    } as const;
+    ```
+
+2. Read the limit in the server component / action that needs gating
+   (see above).
+3. Render `<UpgradeCard />` in the UI when the user is at the limit.
 
 ## Deploying the webhook
 

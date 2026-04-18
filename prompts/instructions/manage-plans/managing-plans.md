@@ -75,10 +75,12 @@ plan automatically.
 
 ### Step 4 (optional): Gate features on the new plan
 
-If the new plan unlocks specific features, check
-`subscriptions.stripePriceId` against the IDs you just added. See
+If the new plan unlocks specific features, update `PLAN_LIMITS` in
+`lib/auth/subscription.ts` and read the limits in the Server Action /
+Server Component that needs gating. See
 `prompts/instructions/stripe/stripe-overview.md` → "Access control for paid
-features".
+features" for the full pattern. `app/dashboard/projects/` is the canonical
+example.
 
 ## Rename a plan
 

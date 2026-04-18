@@ -6,8 +6,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { UpgradeCard } from "@/components/billing/upgrade-card";
 import { db } from "@/db";
 import { projects } from "@/db/schema";
+import { getPlanLimits, getSubscription } from "@/lib/auth/subscription";
 import { createClient } from "@/lib/supabase/server";
 import { desc, eq } from "drizzle-orm";
 import { NewProjectForm } from "./new-project-form";
@@ -27,6 +29,10 @@ export default async function ProjectsPage() {
         .orderBy(desc(projects.createdAt))
     : [];
 
+  const sub = user ? await getSubscription(user.id) : null;
+  const { maxProjects } = getPlanLimits(sub);
+  const atLimit = maxProjects !== null && rows.length >= maxProjects;
+
   return (
     <div className="max-w-4xl space-y-6">
       <div>
@@ -37,15 +43,26 @@ export default async function ProjectsPage() {
         </p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>New project</CardTitle>
-          <CardDescription>Create one to get started.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <NewProjectForm />
-        </CardContent>
-      </Card>
+      {atLimit ? (
+        <UpgradeCard
+          title={`You've reached the Free plan limit (${maxProjects} projects)`}
+          description="Upgrade to Pro for unlimited projects."
+        />
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>New project</CardTitle>
+            <CardDescription>
+              {maxProjects !== null
+                ? `Create one to get started. Free plan: ${rows.length} of ${maxProjects} projects used.`
+                : "Create one to get started."}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <NewProjectForm />
+          </CardContent>
+        </Card>
+      )}
 
       <div className="space-y-3">
         <h2 className="text-sm font-medium text-muted-foreground">

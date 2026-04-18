@@ -45,6 +45,17 @@ Before non-trivial work, read the matching doc in `prompts/`:
    `"use server"` and export server actions. Import them from client forms.
 4. Add a nav link in `components/dashboard/sidebar.tsx`.
 
+## Gating a paid feature
+
+1. Add the limit / flag to `PLAN_LIMITS` in `lib/auth/subscription.ts`.
+2. In the Server Action, check `getPlanLimits(await getSubscription(user.id))`
+   and return `{ error }` if the user is over-limit.
+3. In the page UI, render `<UpgradeCard />` from
+   `components/billing/upgrade-card.tsx` when the user is at the limit,
+   instead of the form.
+
+See `app/dashboard/projects/` for the canonical example.
+
 ## Adding a new plan
 
 1. Create a product + price in the Stripe dashboard.

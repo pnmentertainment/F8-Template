@@ -42,3 +42,9 @@ Your goal is to completely finish whatever the user asks for.
 - **Subscription state is owned by the Stripe webhook.** Do not write to the
   `subscriptions` table from anywhere except
   `app/api/stripe/webhook/route.ts`.
+- **Gate paid features via `lib/auth/subscription.ts`.** Use
+  `getSubscription(userId)`, `isPro(sub)`, and `getPlanLimits(sub)` in the
+  Server Action that needs gating — never read the `subscriptions` table
+  directly from feature code. Update `PLAN_LIMITS` when you add a new gated
+  feature. See `prompts/instructions/stripe/stripe-overview.md` → "Access
+  control for paid features" for the full pattern.

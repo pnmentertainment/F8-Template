@@ -2,8 +2,9 @@
 
 import { db } from "@/db";
 import { projects } from "@/db/schema";
+import { getPlanLimits, getSubscription } from "@/lib/auth/subscription";
 import { createClient } from "@/lib/supabase/server";
-import { and, eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -30,6 +31,22 @@ export async function createProject(
   });
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? "Invalid input" };
+  }
+
+  const sub = await getSubscription(user.id);
+  const { maxProjects } = getPlanLimits(sub);
+
+  if (maxProjects !== null) {
+    const [{ value: existing }] = await db
+      .select({ value: count() })
+      .from(projects)
+      .where(eq(projects.userId, user.id));
+
+    if (existing >= maxProjects) {
+      return {
+        error: `Free plan is limited to ${maxProjects} projects. Upgrade to Pro for unlimited.`,
+      };
+    }
   }
 
   await db.insert(projects).values({
