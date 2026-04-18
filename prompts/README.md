@@ -14,6 +14,16 @@ Use them two ways:
 
 ## What's here
 
+### `product/`
+
+Prompts you run **before** writing code — to turn customer research into a
+PRD and tech spec that are grounded in this template.
+
+- [`write-prd.md`](./product/write-prd.md) — turn research + a proposed
+  solution into `docs/prd.md`.
+- [`write-tech-spec.md`](./product/write-tech-spec.md) — turn the PRD into
+  `docs/tech-spec.md` that references the template's conventions.
+
 ### `instructions/`
 
 Permanent reference docs — the rules and architecture of the template.

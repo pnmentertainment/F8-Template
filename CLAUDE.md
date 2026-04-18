@@ -11,6 +11,13 @@ template.
 - Stripe (only). Client in `lib/stripe/server.ts`, plans in `lib/stripe/plans.ts`.
 - Tailwind + shadcn-style primitives in `components/ui/`.
 
+## Product context
+
+Before implementing a new feature, read `docs/prd.md` and
+`docs/tech-spec.md` if they exist — they describe what the user is
+building on top of this template. Raw customer research lives in
+`docs/research/`.
+
 ## Reference docs
 
 Before non-trivial work, read the matching doc in `prompts/`:

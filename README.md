@@ -95,17 +95,35 @@ db/
   index.ts           ← drizzle db connection
 middleware.ts        ← refreshes Supabase session + protects routes
 prompts/             ← recipes + conventions to paste into your AI assistant
+docs/                ← your product research, PRD, tech spec, inspiration
 ```
+
+## Plan before you build (PRD + tech spec)
+
+Before you write a line of product code, turn your customer research into
+a PRD and tech spec that are grounded in this template:
+
+1. Drop your customer interviews / surveys / competitor notes into
+   `docs/research/`.
+2. Follow [`prompts/product/write-prd.md`](./prompts/product/write-prd.md)
+   to generate `docs/prd.md`.
+3. Follow
+   [`prompts/product/write-tech-spec.md`](./prompts/product/write-tech-spec.md)
+   to generate `docs/tech-spec.md`.
+4. Build against the tech spec using the recipes in `prompts/features/`.
 
 ## Prompts for your AI assistant
 
 The [`prompts/`](./prompts) folder contains reference docs + recipes written
 to be pasted into Claude / Cursor / v0 when you're extending the template:
 
+- `prompts/product/` — write your PRD and tech spec (start here).
 - `prompts/instructions/` — backend, frontend, auth, Stripe, and plan-management
   conventions so the assistant writes code that fits.
 - `prompts/project-setup/` — step-by-step recipes for rebuilding any layer
   from scratch, plus `setup-tables.md` for adding a new database table.
+- `prompts/features/` — task-shaped prompts for common additions
+  (page, table, OAuth provider, gated feature).
 
 See [`prompts/README.md`](./prompts/README.md) for the full index.
 
