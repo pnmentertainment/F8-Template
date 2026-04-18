@@ -11,6 +11,17 @@ template.
 - Stripe (only). Client in `lib/stripe/server.ts`, plans in `lib/stripe/plans.ts`.
 - Tailwind + shadcn-style primitives in `components/ui/`.
 
+## Reference docs
+
+Before non-trivial work, read the matching doc in `prompts/`:
+
+- `prompts/instructions/backend-instructions.md` — backend rules.
+- `prompts/instructions/frontend-instructions.md` — frontend rules.
+- `prompts/instructions/auth/auth-overview.md` — how auth is wired up.
+- `prompts/instructions/stripe/stripe-overview.md` — how Stripe / webhooks work.
+- `prompts/instructions/manage-plans/managing-plans.md` — add / change a plan.
+- `prompts/project-setup/setup-tables.md` — add a new DB table (schema + actions + RLS).
+
 ## Conventions
 
 - **Use the alias `@/…`** for all internal imports.

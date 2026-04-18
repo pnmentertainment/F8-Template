@@ -88,7 +88,20 @@ db/
   sql/               ← raw SQL helpers you run in Supabase
   index.ts           ← drizzle db connection
 middleware.ts        ← refreshes Supabase session + protects routes
+prompts/             ← recipes + conventions to paste into your AI assistant
 ```
+
+## Prompts for your AI assistant
+
+The [`prompts/`](./prompts) folder contains reference docs + recipes written
+to be pasted into Claude / Cursor / v0 when you're extending the template:
+
+- `prompts/instructions/` — backend, frontend, auth, Stripe, and plan-management
+  conventions so the assistant writes code that fits.
+- `prompts/project-setup/` — step-by-step recipes for rebuilding any layer
+  from scratch, plus `setup-tables.md` for adding a new database table.
+
+See [`prompts/README.md`](./prompts/README.md) for the full index.
 
 ## Customising
 
