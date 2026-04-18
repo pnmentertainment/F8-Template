@@ -5,9 +5,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { db } from "@/db";
+import { profiles } from "@/db/schema";
 import { createClient } from "@/lib/supabase/server";
+import { eq } from "drizzle-orm";
+import { ProfileForm } from "./profile-form";
+import { PasswordForm } from "./password-form";
 
 export default async function AccountPage() {
   const supabase = createClient();
@@ -15,8 +18,14 @@ export default async function AccountPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const fullName =
-    (user?.user_metadata?.full_name as string | undefined) ?? "";
+  const [profile] = user
+    ? await db.select().from(profiles).where(eq(profiles.id, user.id)).limit(1)
+    : [];
+
+  const initialFullName =
+    profile?.fullName ??
+    (user?.user_metadata?.full_name as string | undefined) ??
+    "";
 
   return (
     <div className="max-w-2xl space-y-6">
@@ -29,19 +38,26 @@ export default async function AccountPage() {
         <CardHeader>
           <CardTitle>Profile</CardTitle>
           <CardDescription>
-            Your public display info. Read-only for now — wire up an action in{" "}
-            <code>app/dashboard/account</code> to save changes.
+            Your display name and email. Changes save immediately.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" value={user?.email ?? ""} readOnly />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="fullName">Full name</Label>
-            <Input id="fullName" defaultValue={fullName} readOnly />
-          </div>
+        <CardContent>
+          <ProfileForm
+            email={user?.email ?? ""}
+            initialFullName={initialFullName}
+          />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Password</CardTitle>
+          <CardDescription>
+            Choose a strong password — at least 8 characters.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <PasswordForm />
         </CardContent>
       </Card>
     </div>

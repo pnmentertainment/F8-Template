@@ -1,7 +1,7 @@
 import { db } from "@/db";
-import { subscriptions } from "@/db/schema";
+import { projects, subscriptions } from "@/db/schema";
 import { createClient } from "@/lib/supabase/server";
-import { eq } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 import {
   Card,
   CardContent,
@@ -23,6 +23,14 @@ export default async function DashboardHome() {
         .where(eq(subscriptions.userId, user.id))
         .limit(1)
     : [];
+
+  const [projectCountRow] = user
+    ? await db
+        .select({ value: count() })
+        .from(projects)
+        .where(eq(projects.userId, user.id))
+    : [{ value: 0 }];
+  const projectCount = projectCountRow?.value ?? 0;
 
   const plan = sub?.status === "active" ? "Pro" : "Free";
 
@@ -53,10 +61,14 @@ export default async function DashboardHome() {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Projects</CardDescription>
-            <CardTitle className="text-2xl">0</CardTitle>
+            <CardTitle className="text-2xl">{projectCount}</CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground">
-            You haven&apos;t created any projects yet.
+            {projectCount === 0
+              ? "Create your first project to see it here."
+              : projectCount === 1
+              ? "You have 1 project."
+              : `You have ${projectCount} projects.`}
           </CardContent>
         </Card>
 

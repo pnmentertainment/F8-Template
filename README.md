@@ -14,6 +14,7 @@ the product.
 - **Landing page**: hero, features, pricing toggle, FAQ, footer
 - **Auth pages**: sign in, sign up, forgot / reset password
 - **Dashboard**: sidebar, top bar with user menu, account + billing + settings pages
+- **Example feature**: a working Projects CRUD under `app/dashboard/projects/` that mirrors `prompts/project-setup/setup-tables.md` — study it, then delete it when you build your own
 - **Route protection** via middleware (`/dashboard`, `/account` are gated)
 
 ## Quick start
@@ -43,9 +44,12 @@ You need:
 npm run db:push
 ```
 
-Then open the Supabase SQL editor and run the contents of
-`db/sql/handle_new_user.sql`. This creates a trigger that automatically inserts
-a row into `profiles` whenever someone signs up.
+Then open the Supabase SQL editor and run:
+
+- `db/sql/handle_new_user.sql` — trigger that inserts a `profiles` row on signup.
+- `db/sql/projects_rls.sql` — Row Level Security for the example Projects
+  feature. Delete the `projects` table and this file if you remove the
+  example.
 
 ### 4. Run the dev server
 

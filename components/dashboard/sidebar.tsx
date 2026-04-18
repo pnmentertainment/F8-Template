@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CreditCard, Home, Settings, User } from "lucide-react";
+import { CreditCard, FolderKanban, Home, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Overview", icon: Home },
+  { href: "/dashboard/projects", label: "Projects", icon: FolderKanban },
   { href: "/dashboard/account", label: "Account", icon: User },
   { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
