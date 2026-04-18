@@ -8,6 +8,13 @@ Save the output as `docs/prd.md`.
 
 ---
 
+## Prerequisite
+
+Your research must already be in markdown files in `docs/research/` (one
+file per interview / survey / competitor / doc). If you're still sitting
+on `.pptx` files or raw notes, run
+[`prepare-research.md`](./prepare-research.md) first.
+
 ## Step 1 — Prime the AI on the template
 
 Before writing anything, ask your AI assistant to read:
@@ -29,13 +36,11 @@ Then ask:
 
 Keep that summary in your chat context — it's what makes the PRD honest.
 
-## Step 2 — Add your research
+## Step 2 — Point the AI at your research
 
-So you should have your completed PPT files from Week 1 homework. Put those into the /docs folder.
-You should also have from your conversations with AI:
-- User story list
-- Screens you will need list
-Put those in the /docs folder as well. Easiest if you save them as .md files.
+Ask the AI to read **every file in `docs/research/`**. If the research is
+large, ask for a one-paragraph summary per file so the context stays
+manageable.
 
 ## Step 3 — Generate the PRD
 
@@ -44,8 +49,8 @@ Give the AI this instruction, filling in the blanks:
 ---
 
 > You have the template summary above. You also have my customer research
-> and proposed solution documentation in the /docs folder. Write a PRD for **`<PRODUCT_NAME>`** and save it
-> as `docs/prd.md`.
+> and proposed solution documentation in the `docs/research/` folder.
+> Write a PRD for **`<PRODUCT_NAME>`** and save it as `docs/prd.md`.
 >
 > Use exactly these sections, in this order:
 >

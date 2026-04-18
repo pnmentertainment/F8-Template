@@ -19,6 +19,9 @@ Use them two ways:
 Prompts you run **before** writing code — to turn customer research into a
 PRD and tech spec that are grounded in this template.
 
+- [`prepare-research.md`](./product/prepare-research.md) — one-time prep:
+  convert `.pptx` / PDFs / notes into markdown in `docs/research/` so the
+  AI can actually read them.
 - [`write-prd.md`](./product/write-prd.md) — turn research + a proposed
   solution into `docs/prd.md`.
 - [`write-tech-spec.md`](./product/write-tech-spec.md) — turn the PRD into

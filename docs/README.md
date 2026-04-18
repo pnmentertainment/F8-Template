@@ -22,17 +22,21 @@ docs/
 
 The template ships with two prompt files that walk you through it:
 
-1. Do your customer research and drop everything into `docs/research/`.
-2. Follow [`prompts/product/write-prd.md`](../prompts/product/write-prd.md)
+1. Do your customer research.
+2. Follow
+   [`prompts/product/prepare-research.md`](../prompts/product/prepare-research.md)
+   to convert it from `.pptx` / PDF / notes into markdown files in
+   `docs/research/`.
+3. Follow [`prompts/product/write-prd.md`](../prompts/product/write-prd.md)
    to generate `docs/prd.md`.
-3. Follow
+4. Follow
    [`prompts/product/write-tech-spec.md`](../prompts/product/write-tech-spec.md)
    to generate `docs/tech-spec.md`.
-4. Follow
+5. Follow
    [`prompts/product/write-sales-pages.md`](../prompts/product/write-sales-pages.md)
    to rewrite the public marketing surface (hero, features, pricing copy,
    FAQ, metadata, OG image) from the same research.
-5. Build against `docs/tech-spec.md` using the recipes in
+6. Build against `docs/tech-spec.md` using the recipes in
    `prompts/features/`.
 
 ## Tips

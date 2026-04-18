@@ -103,8 +103,10 @@ docs/                ← your product research, PRD, tech spec, inspiration
 Before you write a line of product code, turn your customer research into
 a PRD and tech spec that are grounded in this template:
 
-1. Drop your customer interviews / surveys / competitor notes into
-   `docs/research/`.
+1. Follow
+   [`prompts/product/prepare-research.md`](./prompts/product/prepare-research.md)
+   to convert your `.pptx` decks, PDFs, and notes into markdown files in
+   `docs/research/` (the AI can't read PPTX directly).
 2. Follow [`prompts/product/write-prd.md`](./prompts/product/write-prd.md)
    to generate `docs/prd.md`.
 3. Follow
