@@ -21,15 +21,60 @@ the product.
 - **Polish**: branded 404 / error / loading screens, dynamic favicon + OG image, a dismissible "getting started" checklist on the dashboard, and a startup env-var check with friendly errors
 - **Legal placeholders**: `/privacy` and `/terms` pages ready to be replaced
 
-## Quick start
+## Your journey (clone → launch)
 
-### 1. Install
+From cloning the template to shipping your first paid user, in order.
+Each step links into the detailed section or doc.
+
+### Set up the template
+
+1. **Clone** this repo — or click "Use this template" on GitHub to get
+   your own copy.
+2. **Install** dependencies: `npm install`.
+3. **Configure services + env vars** — create your Supabase and Stripe
+   accounts and fill in `.env.local`. See [Setup details](#setup-details).
+4. **Run the DB setup** — `npm run db:push`, then paste
+   [`db/sql/setup.sql`](./db/sql/setup.sql) into the Supabase SQL editor.
+5. **Start the dev server** — `npm run dev`, then open
+   <http://localhost:3000> and sign up to verify everything works.
+
+### Product phase (plan before you build)
+
+6. **Prepare your research** — convert your `.pptx` decks, PDFs, and
+   notes into markdown files in `docs/research/` →
+   [`prepare-research.md`](./prompts/product/prepare-research.md).
+7. **Write the PRD** →
+   [`write-prd.md`](./prompts/product/write-prd.md) → saves to
+   `docs/prd.md`.
+8. **Write the tech spec** →
+   [`write-tech-spec.md`](./prompts/product/write-tech-spec.md) → saves
+   to `docs/tech-spec.md`.
+9. **Rewrite the sales pages** — hero, features, pricing copy, FAQ,
+   metadata, OG image, all grounded in your research →
+   [`write-sales-pages.md`](./prompts/product/write-sales-pages.md).
+
+### Build and ship
+
+10. **Build your features** — work through your tech spec using the
+    recipes in [`prompts/features/`](./prompts/features/) (add a page,
+    add a table, add an OAuth provider, add a gated feature).
+11. **Deploy to production** →
+    [`DEPLOY.md`](./DEPLOY.md) — Vercel + Supabase + Stripe checklist
+    with smoke tests.
+
+---
+
+## Setup details
+
+Expanded notes for steps 2–5 above.
+
+### Install
 
 ```bash
 npm install
 ```
 
-### 2. Configure environment
+### Configure environment
 
 Copy `.env.example` to `.env.local` and fill in the values:
 
@@ -42,7 +87,10 @@ You need:
 - **Supabase** — create a project at [supabase.com](https://supabase.com) and copy the URL, anon key, service-role key and the Postgres connection string.
 - **Stripe** — create an account at [stripe.com](https://stripe.com), copy your test keys, create a "Pro" product with monthly + yearly prices, and paste the price IDs into `.env.local`.
 
-### 3. Push the database schema
+If a required variable is missing, the server prints a friendly list of
+what's missing on startup.
+
+### Push the database schema
 
 ```bash
 npm run db:push
@@ -53,7 +101,7 @@ Then open the Supabase SQL editor and run
 auto-creates a `profiles` row on signup plus Row Level Security on the
 example Projects table.
 
-### 4. Run the dev server
+### Run the dev server
 
 ```bash
 npm run dev
@@ -61,7 +109,7 @@ npm run dev
 
 Visit <http://localhost:3000>.
 
-### 5. Test Stripe webhooks locally
+### Test Stripe webhooks locally
 
 In a separate terminal:
 
@@ -98,32 +146,12 @@ prompts/             ← recipes + conventions to paste into your AI assistant
 docs/                ← your product research, PRD, tech spec, inspiration
 ```
 
-## Plan before you build (PRD + tech spec)
-
-Before you write a line of product code, turn your customer research into
-a PRD and tech spec that are grounded in this template:
-
-1. Follow
-   [`prompts/product/prepare-research.md`](./prompts/product/prepare-research.md)
-   to convert your `.pptx` decks, PDFs, and notes into markdown files in
-   `docs/research/` (the AI can't read PPTX directly).
-2. Follow [`prompts/product/write-prd.md`](./prompts/product/write-prd.md)
-   to generate `docs/prd.md`.
-3. Follow
-   [`prompts/product/write-tech-spec.md`](./prompts/product/write-tech-spec.md)
-   to generate `docs/tech-spec.md`.
-4. Follow
-   [`prompts/product/write-sales-pages.md`](./prompts/product/write-sales-pages.md)
-   to rewrite the public marketing surface (hero, features, pricing copy,
-   FAQ) from the same research.
-5. Build against the tech spec using the recipes in `prompts/features/`.
-
 ## Prompts for your AI assistant
 
 The [`prompts/`](./prompts) folder contains reference docs + recipes written
 to be pasted into Claude / Cursor / v0 when you're extending the template:
 
-- `prompts/product/` — write your PRD and tech spec (start here).
+- `prompts/product/` — prepare research, write your PRD, tech spec, and sales pages (the product phase above).
 - `prompts/instructions/` — backend, frontend, auth, Stripe, and plan-management
   conventions so the assistant writes code that fits.
 - `prompts/project-setup/` — step-by-step recipes for rebuilding any layer
@@ -143,11 +171,6 @@ See [`prompts/README.md`](./prompts/README.md) for the full index.
   `db/schema/index.ts`, then run `npm run db:push`.
 - **Routes** — anything under `/dashboard` or `/account` is auto-protected.
   Update `PROTECTED_PREFIXES` in `lib/supabase/middleware.ts` to change.
-
-## Deploying
-
-See [`DEPLOY.md`](./DEPLOY.md) for a step-by-step Vercel + Supabase + Stripe
-production checklist (with smoke tests and a "before you launch" list).
 
 ## Credits
 
