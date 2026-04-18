@@ -110,7 +110,11 @@ a PRD and tech spec that are grounded in this template:
 3. Follow
    [`prompts/product/write-tech-spec.md`](./prompts/product/write-tech-spec.md)
    to generate `docs/tech-spec.md`.
-4. Build against the tech spec using the recipes in `prompts/features/`.
+4. Follow
+   [`prompts/product/write-sales-pages.md`](./prompts/product/write-sales-pages.md)
+   to rewrite the public marketing surface (hero, features, pricing copy,
+   FAQ) from the same research.
+5. Build against the tech spec using the recipes in `prompts/features/`.
 
 ## Prompts for your AI assistant
 

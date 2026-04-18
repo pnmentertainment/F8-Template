@@ -23,6 +23,9 @@ PRD and tech spec that are grounded in this template.
   solution into `docs/prd.md`.
 - [`write-tech-spec.md`](./product/write-tech-spec.md) — turn the PRD into
   `docs/tech-spec.md` that references the template's conventions.
+- [`write-sales-pages.md`](./product/write-sales-pages.md) — rewrite the
+  public marketing surface (hero, features, pricing copy, FAQ, metadata,
+  OG image) grounded in your research.
 
 ### `instructions/`
 

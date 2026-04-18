@@ -28,7 +28,11 @@ The template ships with two prompt files that walk you through it:
 3. Follow
    [`prompts/product/write-tech-spec.md`](../prompts/product/write-tech-spec.md)
    to generate `docs/tech-spec.md`.
-4. Build against `docs/tech-spec.md` using the recipes in
+4. Follow
+   [`prompts/product/write-sales-pages.md`](../prompts/product/write-sales-pages.md)
+   to rewrite the public marketing surface (hero, features, pricing copy,
+   FAQ, metadata, OG image) from the same research.
+5. Build against `docs/tech-spec.md` using the recipes in
    `prompts/features/`.
 
 ## Tips
