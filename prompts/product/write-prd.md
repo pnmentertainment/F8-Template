@@ -54,7 +54,7 @@ Give the AI this instruction, filling in the blanks:
 > 3. **Target user** — who, and why they have this problem.
 > 4. **Top 3 jobs-to-be-done** — each phrased as "When ___, I want to
 >    ___, so that ___".
->    **Tech Stack** - We want to use React, Tailwind, next.js, shadcn, supabase, and vercel. 
+> 5. **Tech Stack** - We want to use React, Tailwind, next.js, shadcn, supabase, and vercel. 
 > 6. **Scope**
 >    - **Must have (v1):** features needed for the product to be useful.
 >    - **Should have (v1.1):** desirable but not launch-blocking.
