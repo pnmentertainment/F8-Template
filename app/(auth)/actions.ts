@@ -4,7 +4,9 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 
-export type AuthState = { error?: string; message?: string } | undefined;
+export type AuthState =
+  | { error?: string; message?: string; email?: string }
+  | undefined;
 
 export async function signIn(_: AuthState, formData: FormData): Promise<AuthState> {
   const email = String(formData.get("email") ?? "");
@@ -43,6 +45,7 @@ export async function signUp(_: AuthState, formData: FormData): Promise<AuthStat
   }
 
   return {
+    email,
     message:
       "Check your email to confirm your account. Once confirmed, you'll be signed in automatically.",
   };
