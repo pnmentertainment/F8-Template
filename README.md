@@ -29,7 +29,9 @@ Each step links into the detailed section or doc.
 ### Set up the template
 
 1. **Clone** this repo — or click "Use this template" on GitHub to get
-   your own copy.
+   your own copy. First time setting up? See
+   [`PREREQUISITES.md`](./PREREQUISITES.md) for the tools you need
+   installed (Node.js, Git, Stripe CLI).
 2. **Install** dependencies: `npm install`.
 3. **Configure services + env vars** — create your Supabase and Stripe
    accounts and fill in `.env.local`. See [Setup details](#setup-details).
