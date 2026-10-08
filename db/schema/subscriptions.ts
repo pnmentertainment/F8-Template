@@ -1,4 +1,4 @@
-import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { boolean, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { profiles } from "./profiles";
 
 export const subscriptionStatus = pgEnum("subscription_status", [
@@ -26,7 +26,7 @@ export const subscriptions = pgTable("subscriptions", {
   status: subscriptionStatus("status"),
   interval: planInterval("interval"),
   currentPeriodEnd: timestamp("current_period_end", { withTimezone: true }),
-  cancelAtPeriodEnd: text("cancel_at_period_end"),
+  cancelAtPeriodEnd: boolean("cancel_at_period_end").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

@@ -100,8 +100,10 @@ npm run db:push
 
 Then open the Supabase SQL editor and run
 [`db/sql/setup.sql`](./db/sql/setup.sql) once. It installs the trigger that
-auto-creates a `profiles` row on signup plus Row Level Security on the
-example Projects table.
+auto-creates a `profiles` row on signup, plus Row Level Security on the
+`profiles`, `subscriptions` and example `projects` tables. **Don't skip
+this step** — without RLS, Supabase's public API lets anyone read or edit
+those tables.
 
 ### Run the dev server
 
