@@ -111,7 +111,7 @@ async function syncSubscription(sub: Stripe.Subscription) {
       status: sub.status,
       interval,
       currentPeriodEnd: new Date(sub.current_period_end * 1000),
-      cancelAtPeriodEnd: sub.cancel_at_period_end ? "true" : "false",
+      cancelAtPeriodEnd: sub.cancel_at_period_end,
     })
     .onConflictDoUpdate({
       target: subscriptions.userId,
@@ -121,7 +121,7 @@ async function syncSubscription(sub: Stripe.Subscription) {
         status: sub.status,
         interval,
         currentPeriodEnd: new Date(sub.current_period_end * 1000),
-        cancelAtPeriodEnd: sub.cancel_at_period_end ? "true" : "false",
+        cancelAtPeriodEnd: sub.cancel_at_period_end,
         updatedAt: new Date(),
       },
     });

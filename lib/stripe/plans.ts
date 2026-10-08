@@ -17,8 +17,9 @@ export const PLANS: Plan[] = [
     priceYearly: 0,
     priceIdMonthly: undefined,
     priceIdYearly: undefined,
+    // Keep the Free copy in sync with PLAN_LIMITS in lib/auth/subscription.ts.
     features: [
-      "Up to 10 projects",
+      "Up to 3 projects",
       "Community support",
       "Basic analytics",
     ],
