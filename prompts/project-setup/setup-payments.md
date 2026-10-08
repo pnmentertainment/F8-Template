@@ -62,7 +62,8 @@ And install the Stripe CLI (for local webhook testing) from
 import Stripe from "stripe";
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-10-28.acacia",
+  // Must match the version pinned by the installed `stripe` package.
+  apiVersion: "2026-09-30.endive",
   typescript: true,
   appInfo: { name: "Your SaaS", version: "0.1.0" },
 });

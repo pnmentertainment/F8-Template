@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { subscriptions } from "@/db/schema";
+import { subscriptionStatus, subscriptions } from "@/db/schema";
 import { stripe } from "@/lib/stripe/server";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
@@ -95,11 +95,17 @@ async function syncSubscription(sub: Stripe.Subscription) {
     return;
   }
 
-  const priceId = sub.items.data[0]?.price.id;
-  const interval = sub.items.data[0]?.price.recurring?.interval as
+  const item = sub.items.data[0];
+  const priceId = item?.price.id;
+  const interval = item?.price.recurring?.interval as
     | "month"
     | "year"
     | undefined;
+  // Since Stripe API 2025-03-31, billing periods live on subscription items.
+  const currentPeriodEnd = item
+    ? new Date(item.current_period_end * 1000)
+    : null;
+  const status = toSubscriptionStatus(sub.status);
 
   await db
     .insert(subscriptions)
@@ -108,9 +114,9 @@ async function syncSubscription(sub: Stripe.Subscription) {
       stripeCustomerId: customerId,
       stripeSubscriptionId: sub.id,
       stripePriceId: priceId,
-      status: sub.status,
+      status,
       interval,
-      currentPeriodEnd: new Date(sub.current_period_end * 1000),
+      currentPeriodEnd,
       cancelAtPeriodEnd: sub.cancel_at_period_end,
     })
     .onConflictDoUpdate({
@@ -118,11 +124,21 @@ async function syncSubscription(sub: Stripe.Subscription) {
       set: {
         stripeSubscriptionId: sub.id,
         stripePriceId: priceId,
-        status: sub.status,
+        status,
         interval,
-        currentPeriodEnd: new Date(sub.current_period_end * 1000),
+        currentPeriodEnd,
         cancelAtPeriodEnd: sub.cancel_at_period_end,
         updatedAt: new Date(),
       },
     });
+}
+
+type SubscriptionStatus = (typeof subscriptionStatus.enumValues)[number];
+
+// Stripe's status type is open-ended; anything we don't model is stored as
+// null rather than failing the insert against the Postgres enum.
+function toSubscriptionStatus(status: string): SubscriptionStatus | null {
+  return (subscriptionStatus.enumValues as readonly string[]).includes(status)
+    ? (status as SubscriptionStatus)
+    : null;
 }
