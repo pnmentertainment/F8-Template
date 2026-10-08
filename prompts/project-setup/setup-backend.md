@@ -93,7 +93,7 @@ export type NewProfile = typeof profiles.$inferInsert;
   Stripe webhook:
 
 ```ts
-import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { boolean, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { profiles } from "./profiles";
 
 export const subscriptionStatus = pgEnum("subscription_status", [
@@ -115,7 +115,7 @@ export const subscriptions = pgTable("subscriptions", {
   status: subscriptionStatus("status"),
   interval: planInterval("interval"),
   currentPeriodEnd: timestamp("current_period_end", { withTimezone: true }),
-  cancelAtPeriodEnd: text("cancel_at_period_end"),
+  cancelAtPeriodEnd: boolean("cancel_at_period_end").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
@@ -160,6 +160,22 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
 after insert on auth.users
 for each row execute function public.handle_new_user();
+```
+
+- In the same SQL editor, turn on Row Level Security for `profiles` and
+  `subscriptions`. Supabase exposes every `public` table to the browser
+  through its API, so without this anyone with the anon key could read all
+  emails or mark themselves as Pro. Owners get read-only access; the app
+  writes through Drizzle, which isn't subject to RLS:
+
+```sql
+alter table public.profiles enable row level security;
+create policy "Users can read their own profile"
+on public.profiles for select using (auth.uid() = id);
+
+alter table public.subscriptions enable row level security;
+create policy "Users can read their own subscription"
+on public.subscriptions for select using (auth.uid() = user_id);
 ```
 
 - The backend is now setup.
