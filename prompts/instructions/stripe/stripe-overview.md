@@ -71,7 +71,8 @@ secret it prints into `.env.local` as `STRIPE_WEBHOOK_SECRET`.
    - `checkout.session.completed` → `upsertCustomer` + sync the new subscription.
    - `customer.subscription.created` / `updated` / `deleted` → `syncSubscription`.
 6. `syncSubscription` writes everything Stripe knows (status, interval,
-   period end, cancel-at-period-end) into the `subscriptions` row for that
+   period end (read from the subscription item since Stripe API 2025-03-31),
+   cancel-at-period-end) into the `subscriptions` row for that
    user.
 
 ## Managing an existing subscription
